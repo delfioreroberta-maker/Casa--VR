@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Casa 400 m² — Visita VR</title>
+<script src="https://aframe.io/releases/1.7.0/aframe.min.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/n5ro/aframe-extras@7.5.0/dist/aframe-extras.min.js"></script>
+<style>
+html,body{margin:0;height:100%;background:#eee;font-family:Arial,sans-serif}
+#hint{position:fixed;z-index:10;left:14px;top:14px;background:#fff;padding:10px 12px;border-radius:10px;color:#33271f}
+</style>
+</head>
+<body>
+<div id="hint">Casa 400 m² — apri in VR. Nel Quest premi “Enter VR”. Movimento con stick del controller.</div>
+<a-scene renderer="colorManagement:true; physicallyCorrectLights:true" background="color:#e8e1d6"
+  xr-mode-ui="enabled:true"
+  webxr="optionalFeatures: local-floor, bounded-floor">
+  <a-assets>
+    <a-mixin id="wall" material="color:#e2d7c2;roughness:0.75"></a-mixin>
+    <a-mixin id="dark" material="color:#4b2f1e;roughness:0.6"></a-mixin>
+    <a-mixin id="cream" material="color:#eee8dc;roughness:0.65"></a-mixin>
+    <a-mixin id="cane" material="color:#6f492d;roughness:0.7"></a-mixin>
+  </a-assets>
+
+  <a-entity light="type:ambient;color:#fff;intensity:1.8"></a-entity>
+  <a-entity light="type:directional;color:#fff;intensity:2" position="0 8 0"></a-entity>
+
+  <!-- FLOOR / HOUSE SCALE: 20m x 20m, floor-to-floor 3m -->
+  <a-box position="0 -0.08 0" width="20" height=".16" depth="20" material="color:#5b4332;roughness:.75"></a-box>
+
+  <!-- Ground-floor walls, arranged around walkable rooms -->
+  <a-box position="0 1.4 -9.92" width="20" height="2.8" depth=".16" mixin="wall"></a-box>
+  <a-box position="0 1.4 9.92" width="20" height="2.8" depth=".16" mixin="wall"></a-box>
+  <a-box position="-9.92 1.4 0" width=".16" height="2.8" depth="20" mixin="wall"></a-box>
+  <a-box position="9.92 1.4 0" width=".16" height="2.8" depth="20" mixin="wall"></a-box>
+
+  <!-- Open living/kitchen divider -->
+  <a-box position="0 1.4 3.7" width="20" height="2.8" depth=".16" mixin="wall"></a-box>
+  <!-- service block, leaving central circulation -->
+  <a-box position="7.6 1.4 -2.2" width=".16" height="4.4" depth="4.4" mixin="wall"></a-box>
+  <a-box position="7.6 1.4 2.0" width="4.8" height="2.8" depth=".16" mixin="wall"></a-box>
+
+  <!-- Ground floor feature wall -->
+  <a-box position="-0.4 1.35 -9.75" width="4.5" height="2.5" depth=".08" mixin="cane"></a-box>
+  <a-box position="-2.0 1.35 -9.69" width=".04" height="2.35" depth=".02" material="color:#9b6a44"></a-box>
+  <a-box position="-1.7 1.35 -9.69" width=".04" height="2.35" depth=".02" material="color:#9b6a44"></a-box>
+  <a-box position="-1.4 1.35 -9.69" width=".04" height="2.35" depth=".02" material="color:#9b6a44"></a-box>
+
+  <!-- Kitchen -->
+  <a-box position="-4.5 .45 7.7" width="7.8" height=".9" depth=".65" mixin="cream"></a-box>
+  <a-box position="2.0 .55 6.7" width="4.4" height="1.1" depth="1.2" mixin="cream"></a-box>
+  <a-box position="-3.5 .45 8.9" width="2.8" height=".9" depth=".65" mixin="dark"></a-box>
+
+  <!-- Living furniture -->
+  <a-box position="-5 .55 -1.2" width="5.2" height="1.0" depth="1.0" mixin="cream"></a-box>
+  <a-box position="0.3 .55 -2.5" width="1.0" height="1.0" depth="3.7" mixin="cream"></a-box>
+  <a-box position="-2.3 .25 -2.1" width="2.2" height=".35" depth="1.0" mixin="dark"></a-box>
+
+  <!-- Staircase to first floor -->
+  <a-entity id="stairs">
+    <a-box position="5.0 .15 -1.8" width="3.0" height=".3" depth=".7" mixin="dark"></a-box>
+    <a-box position="5.0 .30 -1.1" width="3.0" height=".3" depth=".7" mixin="dark"></a-box>
+    <a-box position="5.0 .45 -.4" width="3.0" height=".3" depth=".7" mixin="dark"></a-box>
+    <a-box position="5.0 .60 .3" width="3.0" height=".3" depth=".7" mixin="dark"></a-box>
+    <a-box position="5.0 .75 1.0" width="3.0" height=".3" depth=".7" mixin="dark"></a-box>
+    <a-box position="5.0 .90 1.7" width="3.0" height=".3" depth=".7" mixin="dark"></a-box>
+    <a-box position="5.0 1.05 2.4" width="3.0" height=".3" depth=".7" mixin="dark"></a-box>
+    <a-box position="5.0 1.20 3.1" width="3.0" height=".3" depth=".7" mixin="dark"></a-box>
+    <a-box position="5.0 1.35 3.8" width="3.0" height=".3" depth=".7" mixin="dark"></a-box>
+    <a-box position="5.0 1.50 4.5" width="3.0" height=".3" depth=".7" mixin="dark"></a-box>
+    <a-box position="5.0 1.65 5.2" width="3.0" height=".3" depth=".7" mixin="dark"></a-box>
+    <a-box position="5.0 1.80 5.9" width="3.0" height=".3" depth=".7" mixin="dark"></a-box>
+    <a-box position="5.0 1.95 6.6" width="3.0" height=".3" depth=".7" mixin="dark"></a-box>
+    <a-box position="5.0 2.10 7.3" width="3.0" height=".3" depth=".7" mixin="dark"></a-box>
+    <a-box position="5.0 2.25 8.0" width="3.0" height=".3" depth=".7" mixin="dark"></a-box>
+  </a-entity>
+
+  <!-- First floor slab, raised 3m -->
+  <a-box position="0 3 0" width="20" height=".16" depth="20" material="color:#c4b59e;roughness:.75"></a-box>
+
+  <!-- First-floor outer walls -->
+  <a-box position="0 4.4 -9.92" width="20" height="2.8" depth=".16" mixin="wall"></a-box>
+  <a-box position="0 4.4 9.92" width="20" height="2.8" depth=".16" mixin="wall"></a-box>
+  <a-box position="-9.92 4.4 0" width=".16" height="2.8" depth="20" mixin="wall"></a-box>
+  <a-box position="9.92 4.4 0" width=".16" height="20" depth="20" mixin="wall"></a-box>
+
+  <!-- First floor partitions -->
+  <a-box position="0 4.4 3.7" width="12" height="2.8" depth=".16" mixin="wall"></a-box>
+  <a-box position="6 4.4 6.8" width=".16" height="2.8" depth="6.2" mixin="wall"></a-box>
+  <a-box position="0 4.4 -3.0" width="12" height="2.8" depth=".16" mixin="wall"></a-box>
+  <a-box position="-3.0 4.4 0.3" width=".16" height="2.8" depth="6.0" mixin="wall"></a-box>
+  <a-box position="3.0 4.4 0.3" width=".16" height="2.8" depth="6.0" mixin="wall"></a-box>
+
+  <!-- Master suite: direct doors to dressing and private bathroom -->
+  <a-box position="0 4.4 -3.0" width="12" height="2.8" depth=".16" mixin="wall"></a-box>
+  <a-box position="-3.0 4.4 -6.0" width=".16" height="2.8" depth="6" mixin="wall"></a-box>
+  <a-box position="3.0 4.4 -6.0" width=".16" height="2.8" depth="6" mixin="wall"></a-box>
+  <a-box position="6.0 4.4 -6.0" width=".16" height="2.8" depth="6" mixin="wall"></a-box>
+  <a-box position="7.0 4.4 -7.0" width="2.0" height="2.8" depth=".16" mixin="wall"></a-box>
+
+  <!-- Kids beds -->
+  <a-box position="-6 .55 0.7" width="2.2" height="1.0" depth="3.0" mixin="cream"></a-box>
+  <a-box position="0 .55 0.7" width="2.2" height="1.0" depth="3.0" mixin="cream"></a-box>
+  <a-box position="6.8 .55 0.7" width="2.2" height="1.0" depth="3.0" mixin="cream"></a-box>
+
+  <!-- Master bed at first floor -->
+  <a-box position="0 3.55 -6.2" width="2.4" height="1.0" depth="3.0" mixin="cream"></a-box>
+  <!-- Cannettato behind master -->
+  <a-box position="0 4.2 -8.9" width="6.5" height="2.2" depth=".08" mixin="cane"></a-box>
+
+  <!-- Wardrobe -->
+  <a-box position="-1.9 4.0 -4.8" width="2.4" height="2.0" depth=".45" mixin="cane"></a-box>
+  <!-- Bathroom fixtures -->
+  <a-cylinder position="4.9 3.5 -5.2" radius=".55" height=".45" material="color:#eee;roughness:.4"></a-cylinder>
+  <a-box position="4.8 3.7 -7.0" width="1.2" height=".7" depth="1.6" material="color:#eee;roughness:.4"></a-box>
+
+  <!-- Private balconies/terraces -->
+  <a-box position="-6.7 3.05 9.7" width="4.2" height=".12" depth="2.0" mixin="dark"></a-box>
+  <a-box position="0 3.05 9.7" width="4.2" height=".12" depth="2.0" mixin="dark"></a-box>
+  <a-box position="6.7 3.05 9.7" width="4.2" height=".12" depth="2.0" mixin="dark"></a-box>
+  <a-box position="0 3.05 -9.7" width="6.4" height=".12" depth="2.0" mixin="dark"></a-box>
+
+  <!-- Camera starts INSIDE the house, upright at human height -->
+  <a-entity id="rig" movement-controls="speed:0.12; fly:false" position="0 0 1.0">
+    <a-entity camera position="0 1.6 0" look-controls="pointerLockEnabled:false"></a-entity>
+    <a-entity laser-controls="hand:left" raycaster="objects:.clickable"></a-entity>
+    <a-entity laser-controls="hand:right" raycaster="objects:.clickable"></a-entity>
+  </a-entity>
+
+  <a-text value="CASA 400 m²" position="-3 2.7 -8.8" rotation="0 0 0" color="#4b2f1e" width="6"></a-text>
+</a-scene>
+</body>
+</html>
