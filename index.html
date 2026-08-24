@@ -1,43 +1,40 @@
-<!doctype html>
-<html lang="it">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Casa 400 m² — Visita VR</title>
-<script src="https://aframe.io/releases/1.7.0/aframe.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/aframe-extras@7.7.0/dist/aframe-extras.min.js"></script>
-<style>
-html,body{margin:0;height:100%;background:#d8cbb8}
-#msg{position:fixed;z-index:10;left:12px;right:12px;top:12px;padding:12px 14px;border-radius:12px;background:rgba(255,255,255,.94);font:16px Arial;color:#3d2b1f}
-</style>
-</head>
-<body>
-<div id="msg">Casa 400 m² — ruota il telefono per guardarti intorno. Sul Meta Quest 3 comparirà “Enter VR”.</div>
-<a-scene
-  background="color:#d8cbb8"
-  renderer="colorManagement:true; physicallyCorrectLights:true"
-  vr-mode-ui="enabled:true"
-  webxr="optionalFeatures: local-floor, bounded-floor">
-
-  <a-assets>
-    <a-asset-item id="house" src="casa_400mq_3D_arredata.glb"></a-asset-item>
-  </a-assets>
-
-  <a-entity light="type:ambient;intensity:1.8;color:#fff"></a-entity>
-  <a-entity light="type:directional;intensity:2.5;color:#fff" position="-5 10 6"></a-entity>
-
-  <a-entity id="rig" position="0 0 0"
-            movement-controls="speed:0.12;fly:false">
-    <a-camera position="0 1.6 6" look-controls="pointerLockEnabled:false"></a-camera>
-    <a-entity laser-controls="hand:left"></a-entity>
-    <a-entity laser-controls="hand:right"></a-entity>
-  </a-entity>
-
-  <a-entity id="houseModel"
-            gltf-model="#house"
-            position="0 0 0"
-            scale="1 1 1">
-  </a-entity>
-</a-scene>
-</body>
-</html>
+<!doctype html><html lang="it"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>Casa 400 m² VR</title><style>html,body{margin:0;height:100%;overflow:hidden;background:#d8d0c2;font-family:Arial}#info{position:fixed;z-index:5;top:12px;left:12px;right:12px;padding:12px 15px;border-radius:14px;background:#241b15dd;color:white;font-size:14px;line-height:1.35}#go{position:fixed;z-index:6;bottom:28px;left:50%;transform:translateX(-50%);padding:16px 26px;border:0;border-radius:18px;background:#211814;color:#fff;font-size:18px;font-weight:bold}#floor{position:fixed;z-index:5;right:12px;top:12px;padding:9px 12px;border-radius:12px;background:#241b15dd;color:white;font-weight:bold}</style></head><body><div id="info"><b>CASA 400 m²</b><br>2 piani • 4 camere • 4 bagni • cabina armadio • lavanderia • terrazzi<br>Meta Quest 3: premi ENTRA IN VR e usa lo stick sinistro per camminare.</div><div id="floor">PIANO TERRA</div><button id="go">ENTRA IN VR</button><script type="module">
+import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.180.0/build/three.module.js';
+import {VRButton} from 'https://cdn.jsdelivr.net/npm/three@0.180.0/examples/jsm/webxr/VRButton.js';
+const S=new THREE.Scene();S.background=new THREE.Color(0xd8d0c2);S.fog=new THREE.Fog(0xd8d0c2,25,80);const C=new THREE.PerspectiveCamera(72,innerWidth/innerHeight,.05,200);C.position.set(0,1.65,14);
+const R=new THREE.WebGLRenderer({antialias:true,powerPreference:'high-performance'});R.setSize(innerWidth,innerHeight);R.setPixelRatio(Math.min(devicePixelRatio,1.7));R.xr.enabled=true;R.shadowMap.enabled=true;R.shadowMap.type=THREE.PCFSoftShadowMap;R.outputColorSpace=THREE.SRGBColorSpace;R.toneMapping=THREE.ACESFilmicToneMapping;R.toneMappingExposure=1.05;document.body.appendChild(R.domElement);
+const V=VRButton.createButton(R);V.style.display='none';document.body.appendChild(V);go.onclick=()=>V.click();R.xr.addEventListener('sessionstart',()=>{go.style.display='none';info.style.display='none'});R.xr.addEventListener('sessionend',()=>{go.style.display='block';info.style.display='block'});
+const col={wall:0xc8b9a5,wall2:0xd8cbb9,floor:0x8b6f54,wood:0x6b4935,dark:0x34231b,cream:0xe7ddd0,linen:0xd5c1ab,black:0x151313,marble:0xd1c6b6,brass:0xb38b52,green:0x40513f,glass:0x8fb4ba,white:0xf2eee7,rug:0xc8b8a6};
+function M(c,r=.55,m=0){return new THREE.MeshStandardMaterial({color:c,roughness:r,metalness:m})}function B(w,h,d,c,x,y,z,r=.55){let q=new THREE.Mesh(new THREE.BoxGeometry(w,h,d),M(c,r));q.position.set(x,y,z);q.castShadow=q.receiveShadow=true;S.add(q);return q}function Y(r,h,c,x,y,z){let q=new THREE.Mesh(new THREE.CylinderGeometry(r,r,h,28),M(c));q.position.set(x,y,z);q.castShadow=q.receiveShadow=true;S.add(q);return q}function P(r,c,x,y,z){let q=new THREE.Mesh(new THREE.SphereGeometry(r,20,14),M(c));q.position.set(x,y,z);q.castShadow=true;S.add(q)}
+function W(x,z,w,d,h=2.65,c=col.wall){B(w,h,d,c,x,h/2,z)}function rug(w,d,x,z){B(w,.035,d,col.rug,x,.02,z)}function plant(x,z,s=1){Y(.25*s,.35*s,col.dark,x,.18*s,z);for(let i=0;i<7;i++){let a=i*Math.PI*2/7,q=B(.10*s,.7*s,.18*s,col.green,x+Math.cos(a)*.22*s,.58*s,z+Math.sin(a)*.22*s);q.rotation.y=a;q.rotation.z=(i%2?-.35:.35)}}function pend(x,z){Y(.018,.7,col.black,x,2.3,z);P(.11,col.brass,x,1.9,z);P(.06,col.white,x,1.9,z)}
+function sofa(x,z,w=2.6){B(w,.5,.85,col.cream,x,.52,z);B(w,.52,.2,col.cream,x,.92,z+.3);for(let i=-1;i<=1;i++)B(.55,.18,.7,col.linen,x+i*.7,.78,z-.02)}function chair(x,z){Y(.035,.5,col.wood,x,.28,z);B(.62,.12,.62,col.cream,x,.55,z)}function table(x,z,w=2.4,d=1.05){B(w,.12,d,col.wood,x,.78,z);for(let dx of [-w/2+.15,w/2-.15])for(let dz of [-d/2+.15,d/2-.15])Y(.06,.75,col.wood,x+dx,.4,z+dz)}
+function bed(x,z,w=2.1,d=2){B(w,.28,d,col.dark,x,.42,z);B(w-.12,.22,d-.12,col.cream,x,.65,z);B(w-.25,.25,.7,col.linen,x,.79,z-d*.22);B(.55,.2,.4,col.white,x-w*.28,.83,z-d*.25);B(.55,.2,.4,col.white,x+w*.28,.83,z-d*.25);B(w+.15,.5,.18,col.dark,x,.93,z+d*.42);B(.7,.12,.65,col.cream,x,.22,z+d*.62)}function night(x,z){B(.55,.55,.48,col.wood,x,.42,z);Y(.05,.02,col.brass,x,.72,z)}function wardrobe(x,z,w=2.2){B(w,2.35,.6,col.dark,x,1.18,z);for(let i=1;i<3;i++){let q=B(.025,2.1,.02,col.brass,x-w/2+i*w/3,1.18,z-.32)}}
+function bath(x,z,w=2.7,d=3){B(w,.05,d,col.marble,x,.03,z);B(1.5,.78,.55,col.wood,x,.42,z-d*.27);Y(.3,.04,col.white,x,.84,z-d*.27);B(.9,1.9,.9,col.glass,x+w*.28,1,z+d*.12,.12)}function win(x,z,w=2.4){B(w,2.05,.06,col.glass,x,1.35,z,.12);B(.05,2.1,.09,col.dark,x-w/2,1.35,z);B(.05,2.1,.09,col.dark,x+w/2,1.35,z);B(w,.05,.09,col.dark,x,1.35,z)}function curtains(x,z,w){B(.16,2.45,.18,col.linen,x-w/2-.1,1.25,z);B(.16,2.45,.18,col.linen,x+w/2+.1,1.25,z)}
+// piano terra: 20 x 10 m, open-plan day zone
+W(5,0,20,.25);W(-5,0,20,.25);W(0,10,.25,10);W(0,-10,.25,10);
+B(.16,2.45,8,col.dark,-9.72,1.25,-2);for(let i=-3;i<=3;i++)B(.035,2.5,.12,col.brass,-9.57,1.25,-2+i*.8);
+rug(7,5,-4,-2);sofa(-5,-1,3.2);sofa(-5,-3,2.8);B(2.5,.28,1.15,col.dark,-5,.52,-2);B(3.8,.85,.18,col.black,-9.35,.45,-2);B(2.8,.55,.06,col.brass,-9.35,.9,-2);plant(-8,-4,1.2);
+table(-1,-2);for(let i=-1;i<=1;i++){chair(-1+i*1.05,-2.85);chair(-1+i*1.05,-1.15)}
+// kitchen island and cabinetry
+B(4.8,.9,1.05,col.dark,5.5,.5,2);B(4.5,.12,1.6,col.marble,5.5,1.02,2);B(3.2,.9,1.2,col.wood,2.8,.5,-.5);B(3.25,.12,1.3,col.marble,2.8,1.02,-.5);for(let i=-1;i<=1;i++)chair(2.8+i*1,-1.35);pend(2,-1);pend(3.2,-1);pend(4.4,-1);plant(7.8,0);
+win(-3,9.82,4);curtains(-3,9.7,4);win(0,9.82,2.8);curtains(0,9.7,2.8);
+// laundry + two ground bathrooms
+B(3.1,2.45,.18,col.dark,8.25,1.25,9.72);B(.85,.85,.6,col.white,7.35,.55,9.35);B(.85,.85,.6,col.white,8.45,.55,9.35);B(2.5,.08,.8,col.marble,8,1,9.25);bath(8,-4,3,3);bath(8,-8,3,3);
+// entrance console + real staircase
+B(3,.08,2.2,col.marble,1,-9.3);B(1.6,.8,.55,col.wood,1,-8.9);for(let i=0;i<12;i++)B(2.5,.16,.42,col.wood,1,-6.6+i*.38,.08+i*.16);
+// upper floor
+B(20,.12,10,col.floor,0,2.65,0);W(5,0,20,.25);W(-5,0,20,.25);W(0,10,.25,10);W(0,-10,.25,10);
+W(-1.5,-2.8,7,.18,2.65,col.wall2);W(2.4,-.2,.18,5.6,2.65,col.wall2);W(-5,-.5,.18,9,2.65,col.wall2);W(-1.5,2,7,.18,2.65,col.wall2);
+// 3 bedrooms
+for(let a of [[-7,-2.3],[-3.2,2],[-7,2]]){bed(a[0],a[1],1.9,1.75);night(a[0]-1.2,a[1]);night(a[0]+1.2,a[1]);wardrobe(a[0],a[1]+2.1,1.8);rug(2.8,2.2,a[0],a[1]);win(a[0],4.85,2.2);curtains(a[0],4.7,2.2)}
+// master + dressing + ensuite
+bed(4,2.2,2.4,2.1);night(2.55,2.2);night(5.45,2.2);wardrobe(7,4,3);rug(4,3.5,4,1.8);win(4.2,4.85,3);curtains(4.2,4.7,3);wardrobe(8,1,2.6);wardrobe(8,-1.2,2.6);bath(7.2,-3.6,3.8,3);
+// two more bathrooms upstairs
+bath(-3,-3.8,2.7,2.5);bath(-7,7,2.7,2.4);
+// terraces
+B(8,.12,1.6,col.wood,0,5.7);B(8,.12,1.6,col.wood,0,-5.7);for(let x=-3.5;x<=3.5;x+=1)B(.06,1,.06,col.brass,x,6.2,5);for(let x=-3.5;x<=3.5;x+=1)B(.06,1,.06,col.brass,x,6.2,-5);
+for(let p of [[-7,2],[-5,2],[3,4],[6,4]])plant(p[0],p[1],.65);
+S.add(new THREE.HemisphereLight(0xffead2,0x51483e,2));let sun=new THREE.DirectionalLight(0xffe4c3,2.3);sun.position.set(-12,18,10);sun.castShadow=true;sun.shadow.mapSize.set(2048,2048);sun.shadow.camera.left=-30;sun.shadow.camera.right=30;sun.shadow.camera.top=30;sun.shadow.camera.bottom=-30;S.add(sun);for(let p of [[-5,2,0],[0,2,0],[5,2,0],[-7,4,1],[4,4,1],[7,4,1]]){let l=new THREE.PointLight(0xffd0a0,1.25,9);l.position.set(p[0],p[1],p[2]);S.add(l)}
+// VR rig + thumbstick locomotion
+const rig=new THREE.Group();S.add(rig);rig.add(C);R.xr.getController(0);R.xr.getController(1);let last=performance.now();R.setAnimationLoop(()=>{let now=performance.now(),dt=Math.min((now-last)/1000,.05);last=now;if(R.xr.isPresenting){let ses=R.xr.getSession();for(let src of ses.inputSources){if(!src.gamepad)continue;let a=src.gamepad.axes,x=a.length>=4?a[2]:a[0],y=a.length>=4?a[3]:a[1];if(Math.abs(x)>.12||Math.abs(y)>.12){let f=new THREE.Vector3(0,0,-1).applyQuaternion(C.quaternion);f.y=0;f.normalize();let r=new THREE.Vector3(1,0,0).applyQuaternion(C.quaternion);r.y=0;r.normalize();rig.position.addScaledVector(f,-y*2.2*dt);rig.position.addScaledVector(r,x*2.2*dt)}}document.getElementById('floor').textContent=rig.position.y>1.3?'PIANO PRIMO':'PIANO TERRA'}R.render(S,C)});addEventListener('resize',()=>{C.aspect=innerWidth/innerHeight;C.updateProjectionMatrix();R.setSize(innerWidth,innerHeight)});
+</script></body></html>
